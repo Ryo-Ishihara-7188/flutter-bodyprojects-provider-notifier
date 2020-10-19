@@ -1,8 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_state_notifier/flutter_state_notifier.dart';
+import 'package:provider/provider.dart';
+import 'my_page_notifier.dart';
 
 class MyPage extends StatelessWidget {
-  const MyPage({Key key}) : super(key: key);
+  const MyPage._({Key key}) : super(key: key);
+
+  static Widget wrapped() {
+    return MultiProvider(
+      providers: [
+        StateNotifierProvider<MyPageNotifier, MyPageState>(
+          create: (context) => MyPageNotifier(
+            context: context,
+          ),
+        )
+      ],
+      child: const MyPage._(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
