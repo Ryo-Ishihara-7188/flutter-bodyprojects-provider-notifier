@@ -12,6 +12,7 @@ abstract class MyPageState with _$MyPageState {
     @Default(0) int count,
     String weight,
     String comment,
+    @Default([]) List<Map<String, String>> record,
   }) = _MyPageState;
 }
 
@@ -39,6 +40,22 @@ class MyPageNotifier extends StateNotifier<MyPageState> with LocatorMixin {
   void saveComment(String value) {
     state = state.copyWith(comment: value);
     print(state.comment);
+  }
+
+  void register() {
+    final formRecord = {
+      'weight': state.weight,
+      'comment': state.comment,
+      'day': DateTime.now().toString()
+    };
+    print(formRecord);
+
+    final newRecord = List<Map<String, String>>.from(state.record);
+    newRecord.add(formRecord);
+    state = state.copyWith(record: newRecord);
+    print(state.record);
+
+    Navigator.pop(context);
   }
 
   void pushButton() {
