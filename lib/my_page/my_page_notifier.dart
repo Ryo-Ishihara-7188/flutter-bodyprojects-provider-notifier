@@ -28,4 +28,10 @@ class MyPageNotifier extends StateNotifier<MyPageState> with LocatorMixin {
 
   @override
   void initState() {}
+
+  void pushButton() {
+    print("NOTIFIER");
+    state = state.copyWith(count: state.count + 1);
+    print(state.count);
+  }
 }

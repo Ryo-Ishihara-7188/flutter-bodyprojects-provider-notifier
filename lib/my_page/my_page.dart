@@ -22,6 +22,9 @@ class MyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final notifier = context.watch<MyPageNotifier>();
+    print('RE-RENDER');
+
     return Scaffold(
       appBar: AppBar(
         title: Text('体重管理APP'),
@@ -48,15 +51,23 @@ class MyPage extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 12),
-                    child: Text(
-                      '75kg',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24,
-                      ),
-                    ),
+                  Builder(
+                    builder: (BuildContext context) {
+                      final count =
+                          context.select((MyPageState state) => state.count);
+
+                      return Container(
+                        padding: const EdgeInsets.only(left: 12),
+                        width: 100,
+                        child: Text(
+                          count.toString(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                   const SizedBox(width: 24),
                   Expanded(
@@ -112,7 +123,7 @@ class MyPage extends StatelessWidget {
                   color: Colors.amberAccent,
                 ),
                 onPressed: () {
-                  print('ON PUSHED');
+                  notifier.pushButton();
                 })
           ],
         ),
