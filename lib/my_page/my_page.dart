@@ -25,10 +25,6 @@ class MyPage extends StatelessWidget {
     final notifier = context.watch<MyPageNotifier>();
     print('RE-RENDER');
 
-    void _saveWeight(String value) {
-      print(value);
-    }
-
     void popUpForm() {
       showDialog(
         context: context,
@@ -48,7 +44,7 @@ class MyPage extends StatelessWidget {
                           hintText: '嘘つくなよ',
                           labelText: '今日の体重'),
                       onChanged: (value) {
-                        _saveWeight(value);
+                        notifier.saveWeight(value);
                       },
                       keyboardType: TextInputType.number,
                     ),
@@ -65,9 +61,13 @@ class MyPage extends StatelessWidget {
                 padding: EdgeInsets.only(left: 4),
                 child: TextFormField(
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: '後悔先に立たず',
-                      labelText: '懺悔の一言'),
+                    border: OutlineInputBorder(),
+                    hintText: '後悔先に立たず',
+                    labelText: '懺悔の一言',
+                  ),
+                  onChanged: (value) {
+                    notifier.saveComment(value);
+                  },
                 ),
               ),
               SizedBox(
