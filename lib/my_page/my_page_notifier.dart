@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:state_notifier/state_notifier.dart';
+import '../widgets/weight_register_pop_up.dart';
 
 part 'my_page_notifier.freezed.dart';
 
@@ -43,10 +44,12 @@ class MyPageNotifier extends StateNotifier<MyPageState> with LocatorMixin {
   }
 
   void register() {
+    final dateTime = DateTime.now();
+    final day = '${dateTime.year}/${dateTime.month}/${dateTime.day}';
     final formRecord = {
       'weight': state.weight,
       'comment': state.comment,
-      'day': DateTime.now().toString()
+      'day': day
     };
     print(formRecord);
 
@@ -56,6 +59,15 @@ class MyPageNotifier extends StateNotifier<MyPageState> with LocatorMixin {
     print(state.record);
 
     Navigator.pop(context);
+  }
+
+  void popUpForm() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return WeightRegisterPopUp(saveWeight, saveComment, register);
+      },
+    );
   }
 
   void pushButton() {
